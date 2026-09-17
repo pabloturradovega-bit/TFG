@@ -1,0 +1,2 @@
+m1,a1,b1,l1,m2,a2,b2,l2,c,e_cartela,energy,stress,force,mass_kg,energy_per_mass,sim_time_s,y_max_stress_mm,valid_ansys,pivot_height_mm,lever_arm_mm,modo_fallo
+3,70,70,1000,3,70,70,1000,80,3,2779.22769921,1186345417.08,6265.06179119,12.9600264846,214.446143494,3425.1339169,181.034482759,1,181.034482759,818.965517241,Viga

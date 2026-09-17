@@ -1,0 +1,62 @@
+=== Mechanical run log ===
+=== INICIO ECE R66 - L + CARTELA ===
+BATCH_MODE = True
+pipeline_dir = C:/Users/MASTER/Documents/2026_TFG_PTV
+sim_id = 169
+image_dir = C:/Users/MASTER/Documents/2026_TFG_PTV\Resultados\Sobol_512_L1000_Cvar_S235JR\Sim_169
+param_b_mm = 96.4844
+c_mm = 113.9453
+longitud_viga_mm = 1000.0
+angulo_desplazamiento_deg = 30.0
+dir_x_sign = -1.0  (-X estandar)
+desplazamiento_x_mm = -500.0
+Material desde Engineering Data:
+  Yield Strength [Pa] = 235500000
+  Tangent Modulus [Pa] = 1160000000
+[OK] PASO 1: Limpiado (resultados, cargas, malla, coordenadas)
+[OK] PASO 2: Contactos eliminados (0 -> 0). Dependiendo 100% de Shared Topology.
+[OK] PASO 3: Material Structural Steel asignado a 5 cuerpos
+[OK] PASO 5: APDL SOLU (convergencia)
+Resolucion global: 4
+Dim. caracteristica malla: char_dim=86.17 mm  (b=96.48 mm)
+Tamano malla gruesa: char_dim/4 = 21.54 mm
+Tamano malla fina (SOI): char_dim/14=6.16 mm -> clamp -> 6.16 mm  radio=300.0 mm
+[OK] Named Selections detectadas:
+  - B_Inferior
+  - A_Tope
+  - A_Tope_Arista
+[OK] PASO 6: Malla completada. Nodos: 100024, Elementos: 48068
+[OK] PASO 7: Fixed Support en B_Inferior
+[OK] PASO 8: Displacement -500.0 mm X (A_Tope_Arista), Y y Z libres
+[OK] PASO 9: Resultados + Sondas de curvas
+Iniciando Solve...
+[OK] PASO 10: Solve completado
+[OK] Imagen Tensiones guardada en: C:/Users/MASTER/Documents/2026_TFG_PTV\Resultados\Sobol_512_L1000_Cvar_S235JR\Sim_169\Tensiones.png
+[OK] Vista Iso_Gris guardada en: C:/Users/MASTER/Documents/2026_TFG_PTV\Resultados\Sobol_512_L1000_Cvar_S235JR\Sim_169\Vista_Iso_Gris.png
+[OK] Vista Frontal_Gris guardada en: C:/Users/MASTER/Documents/2026_TFG_PTV\Resultados\Sobol_512_L1000_Cvar_S235JR\Sim_169\Vista_Frontal_Gris.png
+[OK] Vista Lateral_Gris guardada en: C:/Users/MASTER/Documents/2026_TFG_PTV\Resultados\Sobol_512_L1000_Cvar_S235JR\Sim_169\Vista_Lateral_Gris.png
+[OK] Vista Zoom_Cartela guardada en: C:/Users/MASTER/Documents/2026_TFG_PTV\Resultados\Sobol_512_L1000_Cvar_S235JR\Sim_169\Zoom_Cartela.png
+[CURVAS] numPoints fuerza: 43, desplazamiento: 43
+[OK] PASO 10C: Curvas exportadas a CSV: C:/Users/MASTER/Documents/2026_TFG_PTV\Resultados\Sobol_512_L1000_Cvar_S235JR\Sim_169\Curvas.csv (43 puntos)
+[PLOTDATA] Columna nodo: Node
+[PLOTDATA] Columna valor: Values
+[PLOTDATA] n_nodes=100994, n_values=100994
+[OK] Y max stress desde PlotData (filtro Y>=5.0mm). Node=3220, Y[mm]=228.7234
+  Cuerpo [sin nombre]: masa=7.245761 kg
+  Cuerpo [sin nombre]: masa=9.027346 kg
+  Cuerpo [sin nombre]: masa=0.116653 kg
+  Cuerpo [sin nombre]: masa=0.116653 kg
+  Cuerpo [sin nombre]: masa=0.279385 kg
+[MASA] Total: 5 cuerpos, masa = 16.7858 kg
+
+=== RESULTADOS ===
+  Energia: 2690.28619259 J
+  Fuerza:  6376.89279434 N
+  Tension: 1081935619.83 Pa
+  Masa:    16.7857982028 kg
+  Y Max Stress [mm]: 228.723404255
+  Valido:  True
+CSV escrito: C:/Users/MASTER/Documents/2026_TFG_PTV\parametrossalida.csv
+Limpiando archivos temporales del solver para liberar espacio...
+[OK] Limpieza de disco completada.
+=== FIN ECE R66 - L + CARTELA ===

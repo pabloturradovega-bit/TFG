@@ -1,0 +1,62 @@
+# encoding: utf-8
+# 2025 R2
+import os
+import time
+SetScriptVersion(Version="25.2.170")
+template1 = GetTemplate(
+    TemplateName="Static Structural",
+    Solver="ANSYS")
+system1 = template1.CreateSystem()
+
+# --- ENGINEERING DATA: plasticidad bilineal desde variables de entorno ---
+yield_pa = os.environ.get("TFG_YIELD_PA", "235500000")
+tangent_modulus_pa = os.environ.get("TFG_TANGENT_MODULUS_PA", "1160000000")
+
+engineeringData1 = system1.GetContainer(ComponentName="Engineering Data")
+material1 = engineeringData1.GetMaterial(Name="Structural Steel")
+matlProp1 = material1.CreateProperty(
+    Name="Isotropic Hardening",
+    Definition="Bilinear",
+    Qualifiers={"Definition": "Bilinear", "Behavior": ""})
+matlProp1.SetData(
+    Index=-1,
+    Variables=["Yield Strength"],
+    Values=[[yield_pa + " [Pa]"]])
+matlProp1.SetData(
+    Variables=["Tangent Modulus"],
+    Values=[[tangent_modulus_pa + " [Pa]"]])
+
+# --- SPACECLAIM: Generar geometria ---
+geometryComponent1 = system1.GetComponent(Name="Geometry")
+geometry1 = system1.GetContainer(ComponentName="Geometry")
+geometry1.Edit(IsSpaceClaimGeometry=True)
+
+DSscript = open("<PIPELINE_DIR>/script_generado_spaceclaim.py", "r")
+DSscriptcommand = DSscript.read()
+DSscript.close()
+
+geometry1.SendCommand(Command=DSscriptcommand, Language="Python")
+geometry1.Exit()
+
+# Forzar actualizacion completa de geometria y named selections
+geometryComponent1.Update(AllDependencies=True)
+geometryComponent1.Refresh()
+time.sleep(3)
+
+# --- MECHANICAL: Ejecutar simulacion ---
+modelComponent1 = system1.GetComponent(Name="Model")
+modelComponent1.Refresh()
+model1 = system1.GetContainer(ComponentName="Model")
+model1.Edit()
+
+DSscript = open("<PIPELINE_DIR>/macro_mechanical.py", "r")
+DSscriptcommand = DSscript.read()
+DSscript.close()
+
+model1.SendCommand(Command=DSscriptcommand, Language="Python")
+model1.Exit()
+
+# Guardar proyecto
+Save(
+    FilePath="<PIPELINE_DIR>/Vigascrea.wbpj",
+    Overwrite=True)

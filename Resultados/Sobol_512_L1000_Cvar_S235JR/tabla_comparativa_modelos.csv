@@ -1,0 +1,29 @@
+Modelo,RMSE_CV_J,R2_CV,Tiempo_s
+★ GPR Matern 5/2,159.14,0.9838,1.8
+GPR Rat.Cuad.,164.2,0.9828,3.7
+GPR Sq.Exp.,169,0.9818,1.8
+GPR Exponencial,199.88,0.9745,1.7
+Red Ancha [100],208.87,0.9721,9.3
+Stepwise Lineal,228.14,0.9667,21.1
+Boosted Trees x200,247.57,0.9608,5.9
+Lineal Interacc.,264.5,0.9553,0.2
+Red Tricapa [10 10 10],276.99,0.951,9.4
+Red Bicapa [10 10],357.83,0.9182,6.6
+Bagged Trees  x200,374.7,0.9103,5.9
+SVM Cúbica,379.1,0.9082,0.1
+Red Estrecha [10],387.59,0.904,4.8
+Red Media [25],401.14,0.8972,5.7
+Árbol Medio,434.52,0.8794,0.1
+Árbol Fino,438.54,0.8771,0.3
+Lineal Robusto,455.16,0.8676,0.1
+Lineal (OLS),458.39,0.8658,0.2
+Árbol Grueso,572.86,0.7903,0
+SVM Cuadrática,722.08,0.6669,0.1
+SVM Lineal,1000.79,0.3601,0.2
+Ef. Lineal LS,1117.07,0.2028,0.2
+Ef. Lineal SVM,1121.18,0.1969,0.5
+SVM Gauss. Media,1264,-0.0207,0.1
+SVM Gauss. Gruesa,1269.16,-0.0291,0.1
+SVM Gauss. Fina,1274.55,-0.0378,0.1
+Kernel SVM (Gauss),1275.66,-0.0397,0.2
+Kernel LS (Gauss),1357.2,-0.1768,0.2

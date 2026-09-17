@@ -1,0 +1,56 @@
+=== Mechanical run log ===
+=== INICIO ECE R66 - L + CARTELA ===
+BATCH_MODE = True
+pipeline_dir = C:/Users/master/Documents/TFG_PTV/Primera prueba
+sim_id = 057
+image_dir = C:/Users/master/Documents/TFG_PTV/Primera prueba\Resultados\DOE_60_L1000_C80_S235JR\Sim_057
+param_b_mm = 47.3689
+c_mm = 80.0
+longitud_viga_mm = 1000.0
+angulo_desplazamiento_deg = 30.0
+desplazamiento_x_mm = -500.0
+Material desde Engineering Data:
+  Yield Strength [Pa] = 235500000
+  Tangent Modulus [Pa] = 1160000000
+[OK] PASO 1: Limpiado (resultados, cargas, malla, coordenadas)
+[OK] PASO 2: Contactos eliminados (0 -> 0). Dependiendo 100% de Shared Topology.
+[OK] PASO 3: Material Structural Steel asignado a 5 cuerpos
+[OK] PASO 4: Analysis Settings (1 step, 50 init, 20 min, 250 max substeps)
+[OK] PASO 5: APDL SOLU (convergencia)
+Tamano malla global (lejos): 11.842225 mm
+Tamano malla fina (esquina): 2.96055625 mm
+[OK] Named Selections detectadas:
+  - B_Inferior
+  - A_Tope
+  - A_Tope_Arista
+[OK] PASO 6: Malla completada. Nodos: 326877, Elementos: 138520
+[OK] PASO 7: Fixed Support en B_Inferior
+[OK] PASO 8: Displacement -500.0 mm X (A_Tope_Arista), Y y Z libres
+[OK] PASO 9: Resultados + Sondas de curvas
+Iniciando Solve...
+[OK] PASO 10: Solve completado
+[OK] Imagen Tensiones guardada en: C:/Users/master/Documents/TFG_PTV/Primera prueba\Resultados\DOE_60_L1000_C80_S235JR\Sim_057\Tensiones.png
+[OK] Vista Iso_Gris guardada en: C:/Users/master/Documents/TFG_PTV/Primera prueba\Resultados\DOE_60_L1000_C80_S235JR\Sim_057\Vista_Iso_Gris.png
+[OK] Vista Frontal_Gris guardada en: C:/Users/master/Documents/TFG_PTV/Primera prueba\Resultados\DOE_60_L1000_C80_S235JR\Sim_057\Vista_Frontal_Gris.png
+[OK] Vista Lateral_Gris guardada en: C:/Users/master/Documents/TFG_PTV/Primera prueba\Resultados\DOE_60_L1000_C80_S235JR\Sim_057\Vista_Lateral_Gris.png
+[OK] Vista Zoom_Cartela guardada en: C:/Users/master/Documents/TFG_PTV/Primera prueba\Resultados\DOE_60_L1000_C80_S235JR\Sim_057\Zoom_Cartela.png
+[CURVAS] numPoints fuerza: 56, desplazamiento: 56
+[OK] PASO 10C: Curvas exportadas a CSV: C:/Users/master/Documents/TFG_PTV/Primera prueba\Resultados\DOE_60_L1000_C80_S235JR\Sim_057\Curvas.csv (56 puntos)
+[PLOTDATA] Columna nodo: Node
+[PLOTDATA] Columna valor: Values
+[PLOTDATA] n_nodes=328356, n_values=328356
+[OK] Y max stress desde PlotData. Node=34862, Y[mm]=214.7059
+  Cuerpo 'SYS': masa=13.550452 kg
+[PESO] Total: 6 cuerpos, peso = 265.8599 N
+
+=== RESULTADOS ===
+  Energia: 3680.49674137 J
+  Fuerza:  8963.19138869 N
+  Tension: 722155132.714 Pa
+  Peso:    265.859866855 N
+  Y Max Stress [mm]: 214.705882353
+  Valido:  True
+CSV escrito: C:/Users/master/Documents/TFG_PTV/Primera prueba\parametrossalida.csv
+Limpiando archivos temporales del solver para liberar espacio...
+[OK] Limpieza de disco completada.
+=== FIN ECE R66 - L + CARTELA ===

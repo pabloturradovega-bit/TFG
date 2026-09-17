@@ -1,0 +1,63 @@
+=== Mechanical run log ===
+=== INICIO ECE R66 - L + CARTELA ===
+BATCH_MODE = True
+pipeline_dir = C:/Users/pablo/Desktop/Matlab/TFG/L/TFG_Pipeline_Definitivo - b
+sim_id = 001
+image_dir = C:/Users/pablo/Desktop/Matlab/TFG/L/TFG_Pipeline_Definitivo - b\Resultados\DOE_1_L1000_C80_S235JR\Sim_001
+param_b_mm = 73.4846
+c_mm = 80.0
+longitud_viga_mm = 1000.0
+angulo_desplazamiento_deg = 30.0
+dir_x_sign = -1.0  (-X estandar)
+desplazamiento_x_mm = -500.0
+Material desde Engineering Data:
+  Yield Strength [Pa] = 235500000
+  Tangent Modulus [Pa] = 1160000000
+[OK] PASO 1: Limpiado (resultados, cargas, malla, coordenadas)
+[OK] PASO 2: Contactos eliminados (0 -> 0). Dependiendo 100% de Shared Topology.
+[OK] PASO 3: Material Structural Steel asignado a 5 cuerpos
+[OK] PASO 5: APDL SOLU (convergencia)
+Resolucion global: 4
+Tamano malla gruesa: b/3 = 24.49 mm
+Tamano malla fina (SOI): b/7 = 10.5 mm  radio=300.0 mm
+[OK] Named Selections detectadas:
+  - B_Inferior
+  - A_Tope
+  - A_Tope_Arista
+[OK] PASO 6: Malla completada. Nodos: 31770, Elementos: 11219
+[OK] PASO 7: Fixed Support en B_Inferior
+[OK] PASO 8: Displacement -500.0 mm X (A_Tope_Arista), Y y Z libres
+[OK] PASO 9: Resultados + Sondas de curvas
+Iniciando Solve...
+[OK] PASO 10: Solve completado
+[OK] Imagen Tensiones guardada en: C:/Users/pablo/Desktop/Matlab/TFG/L/TFG_Pipeline_Definitivo - b\Resultados\DOE_1_L1000_C80_S235JR\Sim_001\Tensiones.png
+[OK] Vista Iso_Gris guardada en: C:/Users/pablo/Desktop/Matlab/TFG/L/TFG_Pipeline_Definitivo - b\Resultados\DOE_1_L1000_C80_S235JR\Sim_001\Vista_Iso_Gris.png
+[OK] Vista Frontal_Gris guardada en: C:/Users/pablo/Desktop/Matlab/TFG/L/TFG_Pipeline_Definitivo - b\Resultados\DOE_1_L1000_C80_S235JR\Sim_001\Vista_Frontal_Gris.png
+[OK] Vista Lateral_Gris guardada en: C:/Users/pablo/Desktop/Matlab/TFG/L/TFG_Pipeline_Definitivo - b\Resultados\DOE_1_L1000_C80_S235JR\Sim_001\Vista_Lateral_Gris.png
+[OK] Vista Zoom_Cartela guardada en: C:/Users/pablo/Desktop/Matlab/TFG/L/TFG_Pipeline_Definitivo - b\Resultados\DOE_1_L1000_C80_S235JR\Sim_001\Zoom_Cartela.png
+[CURVAS] numPoints fuerza: 28, desplazamiento: 28
+[OK] PASO 10C: Curvas exportadas a CSV: C:/Users/pablo/Desktop/Matlab/TFG/L/TFG_Pipeline_Definitivo - b\Resultados\DOE_1_L1000_C80_S235JR\Sim_001\Curvas.csv (28 puntos)
+[PLOTDATA] Columna nodo: Node
+[PLOTDATA] Columna valor: Values
+[PLOTDATA] n_nodes=32243, n_values=32243
+[OK] Y max stress desde PlotData (filtro Y>=5.0mm). Node=254, Y[mm]=89.5933
+[OK] Y max plastic strain desde PlotData. Node=254, Y[mm]=89.5933
+  Cuerpo [sin nombre]: masa=8.633913 kg
+  Cuerpo [sin nombre]: masa=5.456268 kg
+  Cuerpo [sin nombre]: masa=0.058311 kg
+  Cuerpo [sin nombre]: masa=0.058311 kg
+  Cuerpo [sin nombre]: masa=0.151496 kg
+[MASA] Total: 5 cuerpos, masa = 14.3583 kg
+
+=== RESULTADOS ===
+  Energia: 4939.42451654 J
+  Fuerza:  11256.5953534 N
+  Tension: 637446843.679 Pa
+  Masa:    14.3582994754 kg
+  Y Max Stress [mm]: 89.5933
+  Y Max Plastic Strain [mm]: 89.5933
+  Valido:  True
+CSV escrito: C:/Users/pablo/Desktop/Matlab/TFG/L/TFG_Pipeline_Definitivo - b\parametrossalida.csv
+Limpiando archivos temporales del solver para liberar espacio...
+[OK] Limpieza de disco completada.
+=== FIN ECE R66 - L + CARTELA ===

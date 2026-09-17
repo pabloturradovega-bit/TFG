@@ -1,0 +1,2 @@
+Tipo,Fuente_Modelo,m1,a1,b1,m2,a2,e_cartela,c,EPM_Modo_J_kg,EPM_IA0_J_kg,EPM_Real_J_kg,Error_Modo_Pct,Error_IA0_Pct,Energia_Real_J,Fuerza_Real_N,Y_Max_Stress_mm,Modo_Fallo
+Cat 1,IA_0 (global),4,100,40,2,100,4,80,466.43969859298,466.43969859298,468.9998827,0.545881609240814,0.545881609240814,6051.533711,14180.55539,100,Cartela

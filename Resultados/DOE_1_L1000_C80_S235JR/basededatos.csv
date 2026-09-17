@@ -1,0 +1,2 @@
+m1,a1,b1,l1,m2,a2,b2,l2,c,e_cartela,energy,stress,force,mass_kg,energy_per_mass,sim_time_s,y_max_stress_mm,valid_ansys,pivot_height_mm,lever_arm_mm,modo_fallo
+2,50,40,1000,2,50,40,1000,80,2,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,N/A
