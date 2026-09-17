@@ -1,0 +1,65 @@
+# ==========================================
+# MATLAB
+# ==========================================
+*.asv
+*.m~
+*.slxc
+*.mex*
+*.mat~
+slprj/
+_upgradereport/
+
+# ==========================================
+# ANSYS / CAE / Archivos Temporales de Cálculo
+# ==========================================
+*.rst
+*.rth
+*.mode
+*.ldhi
+*.dsub
+*.mntr
+*.esav
+*.full
+*.osav
+*.page
+*.err
+*.DSP
+*.acad*
+*.lock
+*_files/
+*.wbpj
+mechanical_run.log
+parametrossalida.csv
+
+# Archivos de scripts generados dinámicamente
+journal_generado.wbjn
+script_generado_spaceclaim.py
+
+# ==========================================
+# LaTeX / Auxiliares de compilación
+# ==========================================
+*.aux
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fls
+*.ilg
+*.ind
+*.idx
+*.lof
+*.log
+*.lot
+*.out
+*.synctex.gz
+*.toc
+*.nlo
+*.nls
+
+# ==========================================
+# Sistema Operativo / IDEs
+# ==========================================
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
