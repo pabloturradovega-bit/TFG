@@ -2,13 +2,13 @@
 
 [English](README.md) · **Español** · [Français](README.fr.md)
 
-# Seguridad antivuelco de autobuses (CEPE/ONU R66): optimización por elementos finitos de la unión pilar–larguero con un modelo sustituto de procesos gaussianos
+# Seguridad antivuelco de autobuses (ECE R66): optimización por elementos finitos de la unión pilar–larguero con un modelo sustituto de procesos gaussianos
 
 [![MATLAB](https://img.shields.io/badge/MATLAB-R2025a-blue.svg)](https://www.mathworks.com/products/matlab.html)
 [![ANSYS](https://img.shields.io/badge/ANSYS-Workbench%20%2F%20Mechanical-orange.svg)](https://www.ansys.com/)
 [![Python](https://img.shields.io/badge/Python-SpaceClaim%20%2F%20Mechanical%20API-brightgreen.svg)](https://www.python.org/)
 [![Modelo sustituto](https://img.shields.io/badge/Modelo%20sustituto-GPR%20Mat%C3%A9rn%205%2F2-purple.svg)](https://es.wikipedia.org/wiki/Kriging)
-[![Normativa](https://img.shields.io/badge/Normativa-CEPE%2FONU%20R66-red.svg)](https://unece.org/transport/vehicle-regulations)
+[![Normativa](https://img.shields.io/badge/Normativa-ECE%20R66-red.svg)](https://unece.org/transport/vehicle-regulations)
 [![Licencia](https://img.shields.io/badge/Licencia-MIT-green.svg)](LICENSE)
 
 Trabajo Fin de Grado · ETSII, Universidad Politécnica de Madrid · Pablo Turrado Vega · 2026
@@ -23,7 +23,7 @@ Trabajo Fin de Grado · ETSII, Universidad Politécnica de Madrid · Pablo Turra
 
 ## En un párrafo
 
-En un vuelco, la superestructura del autobús tiene que absorber la energía liberada sin invadir el espacio de supervivencia de los pasajeros (Reglamento CEPE/ONU R66). Cada sección candidata exige un análisis por elementos finitos no lineal, con grandes deformaciones, que tarda **entre 20 y 90 minutos**, así que no se puede probar todo. Este proyecto monta un flujo automático completo: MATLAB controla **ANSYS Workbench, SpaceClaim y Mechanical** en lote y sin supervisión (**1.340 simulaciones y más de 400 horas de cálculo**), un **modelo sustituto de procesos gaussianos (GPR, Matérn 5/2)** aprende la energía absorbida a partir de las simulaciones, y un **algoritmo genético con enumeración exhaustiva del catálogo comercial** (perfiles huecos EN 10210-2) encuentra la unión que más energía absorbe por kilo. El óptimo se valida en ANSYS, se comprueba frente a las tolerancias de fabricación con Monte Carlo y frente al umbral de energía del R66. Una interfaz gráfica en MATLAB reúne todo el flujo.
+En un vuelco, la superestructura del autobús tiene que absorber la energía liberada sin invadir el espacio de supervivencia de los pasajeros (Reglamento ECE R66). Cada sección candidata exige un análisis por elementos finitos no lineal, con grandes deformaciones, que tarda **entre 20 y 90 minutos**, así que no se puede probar todo. Este proyecto monta un flujo automático completo: MATLAB controla **ANSYS Workbench, SpaceClaim y Mechanical** en lote y sin supervisión (**1.340 simulaciones y más de 400 horas de cálculo**), un **modelo sustituto de procesos gaussianos (GPR, Matérn 5/2)** aprende la energía absorbida a partir de las simulaciones, y un **algoritmo genético con enumeración exhaustiva del catálogo comercial** (perfiles huecos EN 10210-2) encuentra la unión que más energía absorbe por kilo. El óptimo se valida en ANSYS, se comprueba frente a las tolerancias de fabricación con Monte Carlo y frente al umbral de energía del R66. Una interfaz gráfica en MATLAB reúne todo el flujo.
 
 ## Resultados principales
 

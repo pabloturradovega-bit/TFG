@@ -2,13 +2,13 @@
 
 [English](README.md) · [Español](README.es.md) · **Français**
 
-# Sécurité au retournement des autocars (CEE-ONU R66) : optimisation par éléments finis d'un assemblage montant–traverse avec un métamodèle à processus gaussiens
+# Sécurité au retournement des autocars (ECE R66) : optimisation par éléments finis d'un assemblage montant–traverse avec un métamodèle à processus gaussiens
 
 [![MATLAB](https://img.shields.io/badge/MATLAB-R2025a-blue.svg)](https://www.mathworks.com/products/matlab.html)
 [![ANSYS](https://img.shields.io/badge/ANSYS-Workbench%20%2F%20Mechanical-orange.svg)](https://www.ansys.com/)
 [![Python](https://img.shields.io/badge/Python-SpaceClaim%20%2F%20Mechanical%20API-brightgreen.svg)](https://www.python.org/)
 [![Métamodèle](https://img.shields.io/badge/M%C3%A9tamod%C3%A8le-GPR%20Mat%C3%A9rn%205%2F2-purple.svg)](https://fr.wikipedia.org/wiki/Krigeage)
-[![Réglementation](https://img.shields.io/badge/R%C3%A9glementation-CEE--ONU%20R66-red.svg)](https://unece.org/transport/vehicle-regulations)
+[![Réglementation](https://img.shields.io/badge/R%C3%A9glementation-ECE%20R66-red.svg)](https://unece.org/transport/vehicle-regulations)
 [![Licence](https://img.shields.io/badge/Licence-MIT-green.svg)](LICENSE)
 
 Projet de fin d'études de licence (TFG) · ETSII, Universidad Politécnica de Madrid · Pablo Turrado Vega · 2026
@@ -23,7 +23,7 @@ Projet de fin d'études de licence (TFG) · ETSII, Universidad Politécnica de M
 
 ## En un paragraphe
 
-Lors d'un retournement, la superstructure d'un autocar doit absorber l'énergie libérée sans envahir l'espace de survie des passagers (Règlement CEE-ONU R66). Chaque section candidate demande une analyse par éléments finis non linéaire, en grandes déformations, qui dure **de 20 à 90 minutes** : impossible de tout essayer. Ce projet met en place une chaîne entièrement automatisée : MATLAB pilote **ANSYS Workbench, SpaceClaim et Mechanical** en traitement par lots sans surveillance (**1 340 simulations, plus de 400 heures de calcul**), un **métamodèle à processus gaussiens (GPR, Matérn 5/2)** apprend l'énergie absorbée à partir des simulations, et un **algorithme génétique avec énumération exhaustive du catalogue commercial** (profils creux EN 10210-2) trouve l'assemblage qui absorbe le plus d'énergie par kilogramme. L'optimum est validé dans ANSYS, vérifié vis-à-vis des tolérances de fabrication par Monte-Carlo et du seuil d'énergie du R66. Une interface graphique MATLAB regroupe toute la chaîne.
+Lors d'un retournement, la superstructure d'un autocar doit absorber l'énergie libérée sans envahir l'espace de survie des passagers (Règlement ECE R66). Chaque section candidate demande une analyse par éléments finis non linéaire, en grandes déformations, qui dure **de 20 à 90 minutes** : impossible de tout essayer. Ce projet met en place une chaîne entièrement automatisée : MATLAB pilote **ANSYS Workbench, SpaceClaim et Mechanical** en traitement par lots sans surveillance (**1 340 simulations, plus de 400 heures de calcul**), un **métamodèle à processus gaussiens (GPR, Matérn 5/2)** apprend l'énergie absorbée à partir des simulations, et un **algorithme génétique avec énumération exhaustive du catalogue commercial** (profils creux EN 10210-2) trouve l'assemblage qui absorbe le plus d'énergie par kilogramme. L'optimum est validé dans ANSYS, vérifié vis-à-vis des tolérances de fabrication par Monte-Carlo et du seuil d'énergie du R66. Une interface graphique MATLAB regroupe toute la chaîne.
 
 ## Résultats principaux
 

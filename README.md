@@ -2,13 +2,13 @@
 
 **English** · [Español](README.es.md) · [Français](README.fr.md)
 
-# Bus rollover safety (UN ECE R66): FEM-driven optimisation of a pillar–beam joint with a Gaussian-process surrogate
+# Bus rollover safety (ECE R66): FEM-driven optimisation of a pillar–beam joint with a Gaussian-process surrogate
 
 [![MATLAB](https://img.shields.io/badge/MATLAB-R2025a-blue.svg)](https://www.mathworks.com/products/matlab.html)
 [![ANSYS](https://img.shields.io/badge/ANSYS-Workbench%20%2F%20Mechanical-orange.svg)](https://www.ansys.com/)
 [![Python](https://img.shields.io/badge/Python-SpaceClaim%20%2F%20Mechanical%20API-brightgreen.svg)](https://www.python.org/)
 [![Surrogate](https://img.shields.io/badge/Surrogate-GPR%20Mat%C3%A9rn%205%2F2-purple.svg)](https://en.wikipedia.org/wiki/Kriging)
-[![Regulation](https://img.shields.io/badge/Regulation-UN%2FECE%20R66-red.svg)](https://unece.org/transport/vehicle-regulations)
+[![Regulation](https://img.shields.io/badge/Regulation-ECE%20R66-red.svg)](https://unece.org/transport/vehicle-regulations)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
 Bachelor's thesis (TFG) · ETSII, Universidad Politécnica de Madrid · Pablo Turrado Vega · 2026
@@ -23,7 +23,7 @@ Bachelor's thesis (TFG) · ETSII, Universidad Politécnica de Madrid · Pablo Tu
 
 ## In one paragraph
 
-In a rollover, a bus superstructure must absorb the released energy without intruding into the passengers' survival space (UN ECE R66). Each candidate section needs a non-linear, large-deformation FEM analysis that takes **20 to 90 minutes**, so exhaustive search is out of reach. This project builds a fully automated pipeline: MATLAB drives **ANSYS Workbench, SpaceClaim and Mechanical** in unattended batch mode (**1,340 simulations, more than 400 hours of computing**), a **Gaussian-process (GPR, Matérn 5/2) surrogate** learns the absorbed energy from the simulations, and a **genetic algorithm plus exhaustive enumeration of the commercial catalogue** (EN 10210-2 hollow sections) finds the lightest, most energy-absorbing joint. The optimum is validated in ANSYS, checked for manufacturing tolerances with Monte Carlo, and checked against the R66 energy threshold. A MATLAB GUI wraps the whole workflow.
+In a rollover, a bus superstructure must absorb the released energy without intruding into the passengers' survival space (ECE R66). Each candidate section needs a non-linear, large-deformation FEM analysis that takes **20 to 90 minutes**, so exhaustive search is out of reach. This project builds a fully automated pipeline: MATLAB drives **ANSYS Workbench, SpaceClaim and Mechanical** in unattended batch mode (**1,340 simulations, more than 400 hours of computing**), a **Gaussian-process (GPR, Matérn 5/2) surrogate** learns the absorbed energy from the simulations, and a **genetic algorithm plus exhaustive enumeration of the commercial catalogue** (EN 10210-2 hollow sections) finds the lightest, most energy-absorbing joint. The optimum is validated in ANSYS, checked for manufacturing tolerances with Monte Carlo, and checked against the R66 energy threshold. A MATLAB GUI wraps the whole workflow.
 
 ## Key results
 
