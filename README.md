@@ -1,228 +1,173 @@
-# Optimización Estructural de Arcos de Seguridad Antivuelco (ECE R66) mediante Metamodelos y Simulación FEM Automatizada
+<div align="center">
 
-[![MATLAB](https://img.shields.io/badge/MATLAB-R2024a%2B-blue.svg)](https://www.mathworks.com/products/matlab.html)
+**English** · [Español](README.es.md) · [Français](README.fr.md)
+
+# Bus rollover safety (UN ECE R66): FEM-driven optimisation of a pillar–beam joint with a Gaussian-process surrogate
+
+[![MATLAB](https://img.shields.io/badge/MATLAB-R2025a-blue.svg)](https://www.mathworks.com/products/matlab.html)
 [![ANSYS](https://img.shields.io/badge/ANSYS-Workbench%20%2F%20Mechanical-orange.svg)](https://www.ansys.com/)
 [![Python](https://img.shields.io/badge/Python-SpaceClaim%20%2F%20Mechanical%20API-brightgreen.svg)](https://www.python.org/)
-[![Machine Learning](https://img.shields.io/badge/Machine%20Learning-GPR%20Matérn%205%2F2-purple.svg)](https://en.wikipedia.org/wiki/Kriging)
-[![Normativa](https://img.shields.io/badge/Normativa-UN%2FECE%20R66-red.svg)](https://unece.org/transport/vehicle-regulations)
-[![Licencia](https://img.shields.io/badge/Licencia-MIT-green.svg)](LICENSE)
+[![Surrogate](https://img.shields.io/badge/Surrogate-GPR%20Mat%C3%A9rn%205%2F2-purple.svg)](https://en.wikipedia.org/wiki/Kriging)
+[![Regulation](https://img.shields.io/badge/Regulation-UN%2FECE%20R66-red.svg)](https://unece.org/transport/vehicle-regulations)
+[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
-> **Trabajo Fin de Grado (TFG) — Escuela Técnica Superior de Ingenieros Industriales (ETSII), Universidad Politécnica de Madrid (UPM)**  
-> **Autor:** Pablo Turrado Vega  
-> **Área:** Ingeniería Mecánica, Seguridad Pasiva en Vehículos, Simulación Numérica (CAE/FEM), Metamodelería (IA/Machine Learning) y Optimización Evolutiva.
+Bachelor's thesis (TFG) · ETSII, Universidad Politécnica de Madrid · Pablo Turrado Vega · 2026
 
----
+<img src="docs/img/search_en.gif" width="720" alt="Sampling 512 designs versus surrogate plus genetic algorithm">
 
-## Resumen Ejecutivo
+*Each dot is one non-linear FEM simulation (Sobol order). The best of the 512 simulated designs reaches 387.6 J/kg; the design proposed by the surrogate + genetic algorithm, re-simulated in ANSYS, absorbs **469.0 J/kg**.*
 
-Los accidentes por vuelco en autobuses y autocares constituyen uno de los escenarios de mayor severidad en el transporte colectivo de pasajeros. El **Reglamento ECE R66** exige que la superestructura absorba la energía potencial liberada en el vuelco sin invadir el espacio residual de supervivencia de los ocupantes.
-
-El dimensionamiento óptimo de las secciones estructurales exige evaluar la respuesta elastoplástica en grandes deformaciones mediante **análisis no lineal por elementos finitos (FEM)**. Sin embargo, el elevado coste computacional de estas simulaciones (de 20 a 60 minutos por diseño) imposibilita una exploración exhaustiva directa mediante optimización clásica.
-
-Este proyecto desarrolla e implementa un **marco computacional integral y autónomo** que resuelve este cuello de botella:
-1. **Automatización integral FEM:** Control desatendido en lote (*headless*) de **ANSYS Workbench, SpaceClaim y Mechanical** mediante scripts en Python y MATLAB, acumulando **1.340 simulaciones y más de 400 horas de cómputo**.
-2. **Diseño de Experimentos (DOE):** Exploración sistemática del espacio geométrico de 6 y 7 variables mediante **secuencias cuasi-aleatorias de Sobol** de baja discrepancia y muestreo hipercúbico latino (**LHS**).
-3. **Metamodelería con Machine Learning:** Entrenamiento y comparación automatizada de **28 familias de modelos de regresión**. El modelo óptimo (**Regresión por Procesos Gaussianos / GPR con núcleo Matérn 5/2**) predice la energía absorbida en milisegundos con un **$R^2 = 0{,}987$ y RMSE-CV de 132,6 J**.
-4. **Optimización con Algoritmos Genéticos (GA):** Búsqueda evolutiva sobre el metamodelo combinada con discretización a catálogo comercial de perfiles huecos de acero estructural (**EN 10210-2**).
-5. **Validación Numérica Real:** La sección óptima obtenida se re-simula en ANSYS, confirmando una absorción de energía específica (**SEA**) de **469,0 J/kg**, lo que representa una **mejora del +135 % frente a la media del espacio de diseño** y un **error del metamodelo de solo el 2,42 % (sin sesgo optimista)**.
-6. **Robustez y Análisis Probabilista:** Verificación de tolerancias de fabricación mediante **10.000 muestras Monte Carlo** (clasificación de robustez ALTA, CV = 0,85 %) y **cumplimiento del 100 % del umbral de la ECE R66**.
-7. **Aplicación Gráfica (GUI):** Interfaz completa desarrollada en MATLAB orientada a objetos (`classdef`, ~4.400 líneas) para operar, visualizar y transferir el flujo a entornos industriales sin modificar código.
+</div>
 
 ---
 
-## Resultados Destacados
+## In one paragraph
 
-| Métrica / Indicador | Valor / Resultado | Impacto / Relevancia |
+In a rollover, a bus superstructure must absorb the released energy without intruding into the passengers' survival space (UN ECE R66). Each candidate section needs a non-linear, large-deformation FEM analysis that takes **20 to 90 minutes**, so exhaustive search is out of reach. This project builds a fully automated pipeline: MATLAB drives **ANSYS Workbench, SpaceClaim and Mechanical** in unattended batch mode (**1,340 simulations, more than 400 hours of computing**), a **Gaussian-process (GPR, Matérn 5/2) surrogate** learns the absorbed energy from the simulations, and a **genetic algorithm plus exhaustive enumeration of the commercial catalogue** (EN 10210-2 hollow sections) finds the lightest, most energy-absorbing joint. The optimum is validated in ANSYS, checked for manufacturing tolerances with Monte Carlo, and checked against the R66 energy threshold. A MATLAB GUI wraps the whole workflow.
+
+## Key results
+
+| | Value | Note |
 |---|---|---|
-| **Simulaciones Totales** | **1.340 simulaciones FEM** | 5 campañas completadas (LHS-60, Sobol-512, Cateto Variable-512, S275JR-128, S355JR-128). |
-| **Tiempo de Cómputo Automatizado** | **> 400 horas** | Ejecución batch desatendida en ANSYS Mechanical con reanudación automática. |
-| **Mejor Modelo Predictivo** | **GPR Matérn 5/2** | $R^2 = 0{,}987$, RMSE-CV = 132,6 J (error relativo del 2,4 % sobre el rango). |
-| **Aceleración Computacional** | **> 100.000×** | Predicción analítica en < 1 ms frente a ~30 min de la simulación FEM no lineal. |
-| **SEA Óptima Validada en ANSYS** | **469,0 J/kg** | Frente a 199,3 J/kg (media del espacio) $\rightarrow$ **+135 % de mejora de absorción específica**. |
-| **Error en el Óptimo** | **2,42 %** | Predicción: 457,7 J/kg vs FEM real: 469,0 J/kg (predicción conservadora). |
-| **Espacio de Búsqueda Discreto** | **19.683 a 216.513 diseños** | Verificación por enumeración exhaustiva de que el GA alcanzó el óptimo global. |
-| **Robustez Monte Carlo (10.000 it)** | **CV = 0,85 %** | Coeficiente de variación despreciable frente a tolerancias según EN 10210-2. |
-| **Conformidad Normativa ECE R66** | **100,0 % de cumplimiento** | $P(\text{SEA} \ge E_{\text{umbral}} = 285{,}2\text{ J/kg}) = 100\,\%$. |
+| FEM simulations | **1,340** in 5 campaigns | LHS-60, Sobol-512 (c = 80 mm), Sobol-512 with variable gusset (7 variables), S275JR-128, S355JR-128 |
+| Best surrogate (28 models compared, 5-fold CV) | **GPR Matérn 5/2** | R²-CV = 0.987, RMSE-CV = 132.6 J (2.4 % of the energy range) |
+| Validated optimum (S235JR, c = 80 mm) | **469.0 J/kg** | predicted 457.7 J/kg: 2.4 % error, on the conservative side |
+| Gain over the design space | **+135 %** vs the mean of the 512 designs (199.3 J/kg) | **+21 %** vs the best design actually simulated (387.6 J/kg, simulation 167) |
+| Larger gusset (c up to 120 mm) | **537.5–541.2 J/kg** validated | about +15 % over the c = 80 mm optimum |
+| Robustness (10,000 Monte Carlo samples, EN 10210-2 tolerances) | coefficient of variation **0.85 %** | probability of falling below the R66 threshold (285.2 J/kg): **0 %** |
+| Search space | 19,683 catalogue designs (216,513 with variable gusset) | exhaustive enumeration confirms the GA optimum |
 
----
+Optimal geometry (S235JR): pillar 100 × 40 × 4 mm, beam 100 × 40 × 2 mm, gusset 4 mm thick with 80 mm legs. The **same geometry is optimal for S275JR and S355JR** (validated 527.1 and 642.5 J/kg).
 
-## Arquitectura del Pipeline
+## The problem
 
-El flujo de trabajo acopla de manera modular los entornos de cálculo numérico, modelado geométrico y elementos finitos:
+<img src="docs/img/geometry.png" width="420" align="right" alt="L-joint geometry and design variables">
+
+The structure is the critical **pillar–beam joint (L-section)** of a bus safety ring: two rectangular hollow tubes joined at a right angle and stiffened by a triangular gusset. The base of the beam is clamped and the top of the pillar is pushed **500 mm sideways** (quasi-static, ≈ 30° of rotation).
+
+Design variables (mm):
+- **m₁, a₁**: wall thickness and side (in the bending plane) of the pillar
+- **m₂, a₂**: wall thickness and side of the beam
+- **b**: width of both tubes (out of plane)
+- **e**: gusset thickness; **c**: gusset leg (80 mm, or 70–120 mm in the 7-variable campaign)
+
+Manufacturability (hot-finished hollow sections, EN 10210-2): m ≤ min(a, b)/4.
+
+**Objective: specific energy absorption**, SEA = E / mass [J/kg], where E is the area under the force–displacement curve up to 500 mm and the mass is computed analytically (`masa_analitica.m`).
+
+<br clear="right">
+
+## Pipeline
 
 ```mermaid
-flowchart TD
-    subgraph DOE ["1. Diseño de Experimentos (DOE)"]
-        A1["LHS / Secuencias de Sobol"] --> A2["Restricciones de Fabricabilidad m <= min(a,b)/4"]
-        A2 --> A3["basededatos.csv + meta_campana.mat"]
-    end
-
-    subgraph FEM ["2. Automatización FEM (Headless Batch)"]
-        A3 --> B1["MATLAB: T02 / GUI Launcher"]
-        B1 --> B2["ANSYS Workbench: journal_workbench.wbjn"]
-        B2 --> B3["SpaceClaim: Geometría CAD Paramétrica en Python"]
-        B3 --> B4["ANSYS Mechanical: Mallado no lineal + Solver Newton-Raphson"]
-        B4 --> B5["Extracción de Curvas F-d, M-theta y Clasificación de Rótula Plástica"]
-        B5 --> A3
-    end
-
-    subgraph ML ["3. Metamodelería (Machine Learning)"]
-        A3 --> C1["Limpieza de Datos + Detección de Modos"]
-        C1 --> C2["Benchmarking de 28 Modelos: GPR, SVM, Ensembles, Redes Neuronales"]
-        C2 --> C3["Selección por RMSE Validación Cruzada 5-Fold: GPR Matérn 5/2"]
-    end
-
-    subgraph OPT ["4. Optimización y Robustez"]
-        C3 --> D1["Algoritmo Genético + Proyección a Catálogo Comercial"]
-        D1 --> D2["Enumeración Exhaustiva de Fuerza Bruta: 19.683 combinaciones"]
-        D2 --> D3["Cálculo de Óptimo Nominal y Óptimo Robusto LCB"]
-        D3 --> D4["Validación FEM en ANSYS de los Top-K Diseños: Error < 2.5%"]
-        D4 --> D5["Análisis Monte Carlo 10.000 muestras + Sensibilidad Global de Sobol"]
-    end
+flowchart LR
+    A["Design of experiments<br/>Sobol / LHS<br/>manufacturability check"] --> B["Batch FEM (unattended)<br/>MATLAB → Workbench → SpaceClaim → Mechanical<br/>force–displacement curve, failure mode"]
+    B --> C["Surrogate<br/>28 regression models, 5-fold CV<br/>GPR Matérn 5/2 selected"]
+    C --> D["Optimisation<br/>genetic algorithm + exhaustive<br/>catalogue enumeration, robust LCB optimum"]
+    D --> E["Validation<br/>top-K designs re-simulated in ANSYS"]
+    E --> F["Robustness<br/>Monte Carlo 10,000 samples<br/>Sobol sensitivity, R66 threshold"]
 ```
 
----
+The steps hand over files (`basededatos.csv`, `Sim_NNN/Curvas.csv`, `modelo_surrogate.mat`, …) inside `Resultados/<campaign>/`, so a batch can be interrupted and resumed at any point.
 
-## Interfaz Gráfica de Usuario (`TFG_GUI.m`)
+## Results in pictures
 
-Para facilitar la adopción, experimentación y análisis sin necesidad de modificar código fuente, se ha desarrollado una aplicación completa en MATLAB:
+<img src="docs/img/curves_en.png" width="820" alt="Force-displacement curves of the 512 designs and the optimum">
 
-* **Arquitectura:** Programación orientada a objetos (`classdef TFG_GUI < handle`), con más de **4.400 líneas de código y más de 80 métodos**.
-* **Gestión de Campañas:** Selector dinámico de campañas que conmuta datos, modelos y logs de forma aislada.
-* **Módulos Integrados:**
-  1. **Pestaña DOE:** Configuración visual de límites por variable, fijación de parámetros, simetrías y matrices de correlación en tiempo real.
-  2. **Pestaña Simulaciones:** Ajuste de propiedades de material ($f_y$, $E_t$), parámetros de discretización temporal (subpasos) y mallado adaptativo con *Sphere of Influence*. Monitorización en vivo del batch de ANSYS.
-  3. **Pestaña Entrenamiento:** Entrenamiento desatendido de hasta 28 modelos de regresión, análisis de residuos y clasificación de modos de fallo.
-  4. **Pestaña Optimización GA:** Algoritmo genético continuo y discreto concurrentes, exploración de catálogo por fuerza bruta y calculadora de umbral ECE R66.
-  5. **Pestaña Validación:** Automatización de re-simulación en ANSYS de los diseños ganadores (*winner's curse check*).
-  6. **Pestaña Monte Carlo:** Simulación de tolerancias dimensionales con histogramas de dispersión y cálculo de sensibilidad global de Sobol.
-  7. **Visor de Simulaciones:** Explorador de resultados individuales con gráficos de momento-rotación y visualizador de tensiones de von Mises exportadas por ANSYS.
+*Force–displacement curves of the 512 Sobol designs, coloured by SEA, and the validated optimum (red).*
 
----
+<img src="docs/img/sea_hist_en.png" width="720" alt="Distribution of SEA in the 512 designs">
 
-## Metodología Detallada
+<table>
+<tr>
+<td width="55%"><img src="docs/img/gallery.gif" alt="Von Mises stress at 500 mm for several designs"></td>
+<td>
 
-### 1. Geometría y Variables de Diseño
-La estructura modela la unión crítica pilar-larguero (sección en L) de un arco de seguridad antivuelco de autobús, construida mediante perfiles tubulares rectangulares unidos a inglete y reforzados por una cartela triangular:
-* **$m_1$**: Espesor de pared del pilar (Viga A) $[2, 4]$ mm.
-* **$a_1$**: Altura de la sección del pilar $[40, 100]$ mm.
-* **$m_2$**: Espesor de pared del larguero (Viga B) $[2, 4]$ mm.
-* **$a_2$**: Altura de la sección del larguero $[40, 100]$ mm.
-* **$b$**: Anchura común de ambas vigas ($b = b_1 = b_2$) $[40, 100]$ mm.
-* **$e_\text{cartela}$**: Espesor de la chapa de la cartela triangular $[2, 4]$ mm.
-* **$c$**: Longitud de los catetos de la cartela (80 mm fijo en campaña principal; extendido a $[70, 120]$ mm en campaña de cateto variable).
+**Different geometries, different collapse.** Von Mises stress at the end of the 500 mm push (ANSYS screenshots) for the optimum and four designs from the main campaign, with their dimensions and SEA. Where the joint yields (pillar above the gusset, gusset tip, beam) changes with the geometry.
 
-**Restricción de manufacturabilidad (laminación en caliente EN 10210-2):**
-$$m \leq \frac{\min(a, b)}{4}$$
+</td>
+</tr>
+</table>
 
-### 2. Indicador de Rendimiento (KPI)
-El objetivo es maximizar la **Energía Específica Absorbida (SEA)** a lo largo de un desplazamiento lateral cuasi-estático impuesto de 500 mm:
-$$\text{SEA} = \frac{E_J}{m} \quad [\text{J/kg}]$$
-donde $E_J$ es la integral de la curva fuerza-desplazamiento y $m$ es la masa analítica exacta de la estructura calculada mediante `masa_analitica.m` (concordancia con ANSYS > 99,99 %).
+**What drives the energy (Sobol indices on the surrogate).** The pillar dominates: its wall thickness (S_T = 0.516) and side (S_T = 0.390) explain most of the variance; the gusset thickness has almost no effect (S_T = 0.008), so its tolerance can be relaxed. Figure (in Spanish): [`figura_sensibilidad_sobol.png`](Resultados/Sobol_512_L1000_C80_S235JR/figura_sensibilidad_sobol.png).
 
-### 3. Modos de Fallo y Cinemática del Colapso (`calcular_pivot.m`)
-A partir de la coordenada $Y$ del punto de plastificación máxima ($y_\text{max}$), el sistema clasifica de forma determinista el mecanismo de colapso en:
-* **Modo Viga:** Rótula plástica puntual formada en el tramo libre del pilar por encima de la cartela ($y_\text{max} > a_2 + c$).
-* **Modo Cartela:** Plastificación distribuida en la unión con rotación en bloque de la estructura ($y_\text{max} \leq a_2 + c$).
-* **Paradoja de la especialización:** El entrenamiento de modelos especializados por modo (IA$_v$ e IA$_c$) demostró que, aunque mejoran el error predictivo dentro de su modo, **inducen a los optimizadores a esquinas no representativas con sobre-estimaciones de hasta el 28 %**. El metamodelo global (**IA$_0$**) resultó ser superior y más conservador para la optimización.
+**Sampling.** Sobol covers the space more evenly than LHS (L2-star discrepancy 0.0101 vs 0.0117 with 60 points; spurious correlations 0.142 vs 0.159, down to 0.011 with 512 points). Thanks to its extensibility, the convergence curve comes for free from nested prefixes: RMSE-CV drops from 316 J (64 samples) to 139 J (512), −56 %. Figure: [`convergencia_rmse_sobol512.png`](Resultados/Sobol_512_L1000_C80_S235JR/convergencia_rmse_sobol512.png).
 
----
+**Steel grade.** On 128 paired geometries, SEA scales almost uniformly with the grade: ×1.105 for S275JR and ×1.319 for S355JR, less than the increase in yield strength (+16.8 % and +50.7 %).
 
-## Principales Hallazgos Científicos y Técnicos
+**One model or one per failure mode?** Training specialised surrogates for each collapse mode predicts better *within* the mode, but drives the optimiser to catalogue corners where it over-predicts: the specialised optimum validated at 445.1 J/kg (predicted 506.9, 14 % over) against 469.0 J/kg for the global model, with three times the simulations. The global model wins where it matters.
 
-1. **Sensibilidad Global de Sobol (Saltelli / Jansen):**
-   * El espesor ($m_1$, $S_T = 0{,}516$) y la altura ($a_1$, $S_T = 0{,}390$) del pilar vertical explican **más del 76 % de la varianza total** de la absorción energética.
-   * El espesor de la cartela tiene un impacto prácticamente nulo ($S_T = 0{,}008$), lo que permite relajar sus tolerancias de fabricación sin pérdida de rendimiento.
-   * Sin embargo, el **tamaño del cateto ($c$)** sí es determinante: aumentar el cateto a 120 mm incrementa la energía absorbida hasta los **541,2 J/kg (+15 % adicional)**.
+**R66 compliance.** Figure (in Spanish): [`figura_ecr66_cumplimiento.png`](Resultados/Sobol_512_L1000_C80_S235JR/figura_ecr66_cumplimiento.png).
 
-2. **Convergencia del Muestreo:**
-   * La secuencia de Sobol superó al muestreo LHS al reducir la discrepancia estrellada ($L_2^* = 0{,}0101$ frente a $0{,}0117$) y eliminar correlaciones espurias ($|\rho| \le 0{,}011$ con 512 puntos frente a $0{,}159$ en LHS).
-   * La propiedad de extensibilidad de Sobol permitió estudiar la curva de convergencia del error (64 $\rightarrow$ 128 $\rightarrow$ 256 $\rightarrow$ 512 muestras) reduciendo el RMSE un **56 %** sin necesidad de realizar simulaciones adicionales.
+## The GUI (`TFG_GUI.m`)
 
-3. **Efecto del Grado de Acero (S235JR vs S275JR vs S355JR):**
-   * En un estudio pareado de 128 geometrías comunes, el aumento de energía específica escala como un multiplicador casi constante e independiente de la geometría: **1,105× para S275JR** y **1,319× para S355JR**.
-   * La ganancia de SEA es subproporcional al incremento de límite elástico ($+10{,}5\,\%$ y $+31{,}9\,\%$ de SEA frente a $+16{,}8\,\%$ y $+50{,}7\,\%$ en $f_y$).
-   * **La geometría óptima es idéntica en los tres materiales:** la plantilla dimensional óptima hallada para S235JR maximiza también el rendimiento en aceros de alta resistencia.
+<img src="docs/img/gui.png" width="820" alt="MATLAB GUI, simulations tab">
 
----
+A single MATLAB app (`classdef`, about 5,700 lines) runs the whole workflow without touching the code: DOE with bounds, fixed values and linked variables; batch launch with mesh and sub-step controls; training of up to 28 models; GA and brute-force optimisation with the R66 threshold; top-K validation in ANSYS; Monte Carlo and Sobol sensitivity; and a viewer for every simulation (curves, stresses, views). The campaign selector switches data, models and logs.
 
-## Estructura del Repositorio
+## Repository layout
 
 ```text
-├── TFG_GUI.m                     # Aplicación Gráfica Integrada en MATLAB OOP (~4.400 líneas)
-├── T01_Generar_DOE_Sobol.m       # Generador de plan de experimentos (Sobol / LHS)
-├── T02_Lanzar_Simulaciones_Batch.m # Bucle batch desatendido con ANSYS Workbench
-├── T03_Entrenar_Modelo_IA.m      # Pipeline CLI para ajuste y exportación del metamodelo
-├── T04_Optimizacion_GA.m         # Algoritmo Genético + Fuerza bruta de catálogo
-├── T05_Validar_Optimo.m          # Validación FEM de los Top-K diseños en ANSYS
-├── T06_Analisis_Montecarlo.m     # Análisis probabilista de robustez (10.000 iteraciones)
-│
-├── masa_analitica.m              # Cálculo analítico de masa de la sección en L y cartela
-├── calcular_pivot.m              # Identificación de rótula plástica, brazo y modo de fallo
-├── extraer_gpr.m                 # Extractor universal de objetos RegressionGP
-├── analizar_sensibilidad_sobol.m # Estimadores de Saltelli/Jansen para índices de Sobol
-│
-├── journal_workbench.wbjn        # Plantilla de diario de automatización ANSYS Workbench
-├── plantilla_spaceclaim.py       # Macro generadora de geometría 3D en SpaceClaim
-├── macro_mechanical.py          # Script de mallado no lineal, condiciones y resolución FEM
-│
-├── active_campaign.txt           # Puntero a la campaña activa en ejecución
-├── Resultados/                   # Datos brutos, CSVs, modelos .mat y carpetas Sim_NNN
-│   ├── Sobol_512_L1000_C80_S235JR/   # Campaña principal de 512 muestras
-│   ├── Sobol_512_Cvar_L1000_S235JR/  # Campaña de cateto variable (7 variables)
-│   ├── Comp_Material_128_S275JR/     # Campaña pareada acero S275JR
-│   └── Comp_Material_128_S355JR/     # Campaña pareada acero S355JR
-│
-└── LaTeX_TFG/                    # Código fuente completo de la memoria del proyecto
-    ├── main.tex                  # Documento principal
-    ├── capitulos/                # Capítulos individuales (Introducción a Conclusiones)
-    └── figuras/                  # Gráficos de alta resolución y capturas de pantalla
+├── TFG_GUI.m                        MATLAB GUI (whole workflow)
+├── T01_Generar_DOE_Sobol.m          1. design of experiments (Sobol)   · T01_Generar_DOE_LHS.m (LHS)
+├── T02_Lanzar_Simulaciones_Batch.m  2. unattended ANSYS batch (resumable)
+├── T03_Entrenar_Modelo_IA.m         3. data cleaning + surrogate training
+├── T04_Optimizacion_GA.m            4. genetic algorithm + catalogue enumeration
+├── T05_Validar_Optimo.m             5. top-K validation in ANSYS
+├── T06_Analisis_Montecarlo.m        6. Monte Carlo robustness and R66 compliance
+├── masa_analitica.m · calcular_pivot.m · extraer_gpr.m · analizar_sensibilidad_sobol.m
+├── journal_workbench.wbjn · plantilla_spaceclaim.py · macro_mechanical.py   ANSYS automation
+├── recalcular_modos_fallo.m · regenerar_graficas.m                         maintenance
+├── active_campaign.txt              pointer to the active campaign
+├── docs/                            README figures (make_figures.py regenerates them)
+└── Resultados/                      one folder per campaign: basededatos.csv, models, figures, Sim_NNN/
+    ├── DOE_60_L1000_C80_S235JR/            LHS pilot
+    ├── Sobol_512_L1000_C80_S235JR/         main campaign (6 variables)
+    ├── Sobol_512_L1000_Cvar_S235JR/        variable gusset (7 variables)
+    ├── Sobol_128_L1000_C80_S275JR/  ·  Sobol_128_L1000_C80_S355JR/   steel grades
+    └── Comp_IA0_128mix_… · Comp_IAc_128cart_…   global vs specialised surrogate
 ```
 
----
+Code identifiers, comments and CSV columns are in Spanish.
 
-## Guía de Inicio Rápido
+## Quick start
 
-### Requisitos de Software
-* **MATLAB R2022b o superior** (requiere *Statistics and Machine Learning Toolbox* y *Global Optimization Toolbox*).
-* **ANSYS Workbench / Mechanical v2021 R1 a v2025 R2** (únicamente necesario para ejecutar nuevas simulaciones FEM o validaciones; el análisis con modelos ya entrenados y la GUI funcionan de forma independiente sin ANSYS).
+Requirements: MATLAB (developed with R2025a) with the Statistics and Machine Learning and Global Optimization toolboxes. ANSYS Workbench/Mechanical (2021 R1 to 2025 R2 are detected) is only needed to run new simulations: the GUI, the trained surrogates and the analyses work without it.
 
-### Ejecución de la Interfaz Gráfica
-Para abrir la suite de análisis completa:
 ```matlab
-% Desde la raíz del repositorio en la consola de MATLAB:
-TFG_GUI
+TFG_GUI                         % the whole workflow in one window
+% or step by step:
+T01_Generar_DOE_Sobol           % 1. sampling plan        → basededatos.csv
+T02_Lanzar_Simulaciones_Batch   % 2. FEM batch in ANSYS   → Sim_NNN/Curvas.csv
+T03_Entrenar_Modelo_IA          % 3. surrogate            → modelo_surrogate.mat
+T04_Optimizacion_GA             % 4. optimisation         → optimo_GA.mat
+T05_Validar_Optimo              % 5. validation in ANSYS
+T06_Analisis_Montecarlo         % 6. robustness and R66 compliance
 ```
 
-### Ejecución por Línea de Comandos (CLI)
-Para reproducir secuencialmente el flujo de trabajo:
-```matlab
-T01_Generar_DOE_Sobol          % 1. Genera el espacio de muestreo en basededatos.csv
-T02_Lanzar_Simulaciones_Batch  % 2. Ejecuta la simulación no lineal en ANSYS en lote
-T03_Entrenar_Modelo_IA         % 3. Ajusta y selecciona el metamodelo óptimo
-T04_Optimizacion_GA            % 4. Optimización con GA y enumeración del catálogo
-T05_Validar_Optimo             % 5. Valida el diseño óptimo en ANSYS Mechanical
-T06_Analisis_Montecarlo        % 6. Evalúa tolerancias y calcula cumplimiento ECE R66
-```
+To regenerate the README figures: `python docs/make_figures.py` (numpy, pandas, matplotlib, pillow).
 
----
+## Limitations and data notes
 
-## Cita y Referencia Académica
+- Single joint under quasi-static monotonic loading, bilinear S235JR, one element through the wall thickness; the model is validated against mesh refinement, not against physical tests.
+- The failure-mode label (`calcular_pivot.m`) uses the height of the single node with maximum von Mises stress; it is a coarse descriptor of the collapse mechanism.
+- In the variable-gusset campaign, `Sim_040` (stops at 26 mm) and `Sim_453` (stops at 250 mm) are flagged valid although they did not reach 500 mm; their effect on the surrogate is negligible. The validation folders `Sim_VAL_Cat_9` (c = 80 mm) and `Sim_VAL_Cat_5` (variable gusset) contain the curve of another design.
 
-Si utilizas este código, metodologías o resultados en tus investigaciones o proyectos, por favor cita este trabajo:
+Natural next step: adaptive (Bayesian) sampling instead of a one-shot DOE, which the thesis proposes as future work.
+
+## Citation
 
 ```bibtex
-@mastersthesis{TurradoVega2026TFG,
-  author       = {Pablo Turrado Vega},
-  title        = {Optimización de secciones estructurales para arcos de seguridad antivuelco de autobús (ECE R66) mediante modelos sustitutos y algoritmos genéticos},
-  school       = {Escuela Técnica Superior de Ingenieros Industriales, Universidad Politécnica de Madrid (UPM)},
-  year         = {2026},
-  type         = {Trabajo Fin de Grado},
-  address      = {Madrid, España}
+@thesis{TurradoVega2026TFG,
+  author = {Pablo Turrado Vega},
+  title  = {Optimización de secciones estructurales para arcos de seguridad antivuelco de autobús (ECE R66) mediante modelos sustitutos y algoritmos genéticos},
+  school = {Escuela Técnica Superior de Ingenieros Industriales, Universidad Politécnica de Madrid},
+  type   = {Bachelor's thesis (Trabajo Fin de Grado)},
+  year   = {2026},
+  address = {Madrid, Spain}
 }
 ```
 
----
+## License
 
-## Licencia
-Este proyecto se distribuye bajo la licencia **MIT**. Consulta el archivo `LICENSE` para más información.
+MIT. See [`LICENSE`](LICENSE).
